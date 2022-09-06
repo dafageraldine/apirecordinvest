@@ -8,9 +8,9 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 ###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+# cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
 ####server
-# cred = credentials.Certificate('tokotelur.json')
+cred = credentials.Certificate('recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
