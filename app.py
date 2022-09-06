@@ -18,6 +18,10 @@ tblrecord = dbq.collection('investment record')
 tblsaldo = dbq.collection('investment saldo')
 tbltype = dbq.collection('investment type')
 
+@app.route('/')
+def index():
+    return {"welcome to record invest webserver"}
+
 @app.route('/gettype')
 def gettype():
     data = tbltype.get()
