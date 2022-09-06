@@ -20,7 +20,7 @@ tbltype = dbq.collection('investment type')
 
 @app.route('/')
 def index():
-    return {"welcome to record invest webserver"}
+    return ("welcome to record invest webserver")
 
 @app.route('/gettype')
 def gettype():
