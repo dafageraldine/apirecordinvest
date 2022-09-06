@@ -64,6 +64,12 @@ def getrecord():
         djson.append({"date" : date, "value" : value, "type" : type, "product" : product})
     return {"data":djson}
 
+@app.route('/inserttypenproduct',methods=["POST"])
+def inserttypenproduct():
+    data = request.form.to_dict(flat=False)
+    tbltype.add({"type":data['type'][0] })
+    tblproduct.add({"name" :data['name'][0] })
+    return { "message" : "data has been added"}
 # @app.route('/insertdata',methods=["POST"])
 # def insertdata():
 #     jam = 0
