@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "recordinvest-71ffd",
+  "private_key_id": "371c8cddbde84d3368e983f087de97854c4957d4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDafpM0Ac3qnr5A\n3XjC0Bah44wTddlGJKmc4rBQRhAF/TghA+pKle9yr6ljkXoah37e7UoTziXYxEEW\nieSzxMKaSdeny2lobzrlXuZZBLyGc249PT+BbUtvvlO/88st2d5hqZiDkeewYz/E\nP8wWD6cH8CROPQ11xp1lIv7ApxA1q9Ca9D9oLCzKRA28n555/PFQWLHFCxVIuf/F\nz0p4WLyNzWXFrxFjo988Ui5TTYHb4LFQpxrClr4n2ldjpaaj2vXw2Hl1kAjZSRLh\nj/NUWvsFye7Vkdo4j+u09BYhFdB/uXX8Bqc0mNVIJ9yvOaKD9K4C4oJW+6GpeUdK\ng9GMoGLxAgMBAAECgf9KBE9ActwIJdPydOXMKJEGEi2sXlwBP00qem5VbfJHanQI\nwuy3wkeFLpYF1lbLwwGtAWIpSbktU6Pb7kk1Q70hIIO2ms4XoWBTQgv+wNkY1dzc\npeXoMXpXyiMDfAC6Vi4tF/CJ37nSfHdoQwnJuSDN1mZHmtWiC3MhjOMLxz71ih1R\nMtGQvMU6D6fvKRE8X27z2KjiMXq+pPRmZsb8FBtPayR6dlFDYYXoB5kaobSP2RhF\nLgTSWmhhrgqOrKhIZvG3G9iweURflPRucYyEG3r7drnXVvGDEO3XoeEYy/rgqSUv\nuqJ49S0mZJPx/rD+966FZtrbh4N5NURq5z3HH4ECgYEA++dUUa1GmFvCDeR/R/66\nyI3CdV6Hs8ZllVn4eu4Y7e2viVB2xxwmHyBbdcQJ83qJQYzaflgxq/go6vyKCe8w\nKBOgjvLbxCfMLMj/3+Ibew6LK+7dFeVVrZyFci6Q6VgmxVK8p45pv9+SpUOF5Vko\nR/z9oRvpsnW6JIo2w57K+DECgYEA3gwp6OdEb6wLcQaRd6wnJfor8u4tD8bR3WGb\nlad0uk01t3X5H/w8VRIRp71EuQZ3/i5PAYOmxznd6FqS94ZeNjW1dV2Qj288fIDq\n7X4b3SI5ThrgHbY71i06NHCeU48C36CdQi06wPYPGqAS3ro5TqGmzvR/rlGhBJIF\nRRQEJsECgYEAnPnjSaK5Q2iq3Q1vY+YRb7knXQyzdAxGcXPHrJODZYGgyekim6Gm\n/+6iEBlCOkA6GGc2IVXEXm4e0ZDeVKKBV/gjLfGZkfta+O2oxlOY3G6Lu6z2iRaI\n9c98OVNbao5MWtrcRW4x6CfisqoJXorY10OIqkVCtLs4bFzVE8J4qYECgYEAxsLM\noRajQ/MVKs9eV2lagbw2qvZYj87A/RHqW0PSURHcC6Umo2L9/oh2FVhus9D+iCCb\nyBc4qw05fkvVUoyMuKnLDIv8YuiHlEsx//TqrD9+XFPiWbZOSaGigF5u2w0g3VzA\naARkm2Wmj4bKXWUE90XsM0TZJgkbwSOUZAlOzgECgYEA7aahijCIh5ku38NZ3vEL\n9/jymH/SQn9QNvK4buDfBHzoQa2HWrzQrXjZ6nB0jWcidw5cW/os+E1zmuNwxIXb\ndUirB0xiY38x+/Vweq0qnpEhOCJx+Gy1LVFdeO/0mQYuprRoQ2TUQ8dK3OcmXXKG\nxzMRMY88MH4FCm672nlIZ8w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-93szo@recordinvest-71ffd.iam.gserviceaccount.com",
+  "client_id": "113557636901484320633",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-93szo%40recordinvest-71ffd.iam.gserviceaccount.com"
+}
