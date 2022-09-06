@@ -70,6 +70,21 @@ def inserttypenproduct():
     tbltype.add({"type":data['type'][0] })
     tblproduct.add({"name" :data['name'][0] })
     return { "message" : "data has been added"}
+
+@app.route('/insertrecord',methods=["POST"])
+def insertrecord():
+    data = request.form.to_dict(flat=False)
+    now = datetime.datetime.now(datetime.timezone.utc)
+    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":now})
+    return { "message" : "data has been added"}
+
+@app.route('/insertsaldo',methods=["POST"])
+def insertsaldo():
+    data = request.form.to_dict(flat=False)
+    now = datetime.datetime.now(datetime.timezone.utc)
+    tblsaldo.add({ "saldo":float(data['saldo'][0]),"date":now})
+    return { "message" : "data has been added"}
+
 # @app.route('/insertdata',methods=["POST"])
 # def insertdata():
 #     jam = 0
