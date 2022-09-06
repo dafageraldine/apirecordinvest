@@ -7,6 +7,8 @@ import datetime
 
 app = Flask(__name__)
 CORS(app)
+
+# https://apirecordinvest.herokuapp.com/
 ###dev
 # cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
 ####server
