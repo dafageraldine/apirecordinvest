@@ -26,7 +26,8 @@ def index():
 
 @app.route('/gettype')
 def gettype():
-    data = tbltype.get()
+    # data = tbltype.order_by(u'type', direction=firestore.Query.DESCENDING).get().limit(1)
+    data = tbltype.order_by(u'type', direction=firestore.Query.ASCENDING).get()
     djson = []
     for i in range(len(data)):
         type = data[i].to_dict()['type']
@@ -35,7 +36,7 @@ def gettype():
 
 @app.route('/getproduct')
 def getproduct():
-    data = tblproduct.get()
+    data = tblproduct.order_by(u'name', direction=firestore.Query.ASCENDING).get()
     djson = []
     for i in range(len(data)):
         name = data[i].to_dict()['name']
@@ -44,12 +45,17 @@ def getproduct():
 
 @app.route('/getsaldo')
 def getsaldo():
-    data = tblsaldo.get()
+    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
+    # data = tblrecord.where(u'date',u'==',).get()
+    # djson = []
+    # for i in range(len(data)):
+    #     date = data[i].to_dict()['date']
+    #     saldo = data[i].to_dict()['saldo']
+    #     djson.append({"date" : date, "saldo" : saldo})
     djson = []
-    for i in range(len(data)):
-        date = data[i].to_dict()['date']
-        saldo = data[i].to_dict()['saldo']
-        djson.append({"date" : date, "saldo" : saldo})
+    for i in range(len(dates)):
+        date = dates[i].to_dict()['date']
+        djson.append({"date" : date})
     return {"data":djson}
 
 @app.route('/getrecord')
@@ -79,7 +85,7 @@ def inserttypenproduct():
 def insertrecord():
     data = request.form.to_dict(flat=False)
     now = datetime.datetime.now(datetime.timezone.utc)
-    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":now})
+    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d")})
     return { "message" : "data has been added"}
 
 @app.route('/insertsaldo',methods=["POST"])
