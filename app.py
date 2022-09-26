@@ -17,7 +17,6 @@ firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
 tblrecord = dbq.collection('investment record')
-tblsaldo = dbq.collection('investment saldo')
 tbltype = dbq.collection('investment type')
 
 @app.route('/')
@@ -46,16 +45,17 @@ def getproduct():
 @app.route('/getsaldo')
 def getsaldo():
     dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
-    # data = tblrecord.where(u'date',u'==',).get()
-    # djson = []
-    # for i in range(len(data)):
-    #     date = data[i].to_dict()['date']
-    #     saldo = data[i].to_dict()['saldo']
-    #     djson.append({"date" : date, "saldo" : saldo})
-    djson = []
+    date = ""
     for i in range(len(dates)):
         date = dates[i].to_dict()['date']
-        djson.append({"date" : date})
+    data = tblrecord.where(u'date',u'==',date).get()
+    djson = []
+    value = 0
+    for i in range(len(data)):
+        date = data[i].to_dict()['date']
+        value = value + data[i].to_dict()['value']
+        if(i == len(data)-1):
+            djson.append({"date" : date, "saldo" : value})
     return {"data":djson}
 
 @app.route('/getrecord')
@@ -87,26 +87,6 @@ def insertrecord():
     # now = datetime.datetime.now(datetime.timezone.utc)
     tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d")})
     return { "message" : "data has been added"}
-
-@app.route('/insertsaldo',methods=["POST"])
-def insertsaldo():
-    data = request.form.to_dict(flat=False)
-    now = datetime.datetime.now(datetime.timezone.utc)
-    tblsaldo.add({ "saldo":float(data['saldo'][0]),"date":now})
-    return { "message" : "data has been added"}
-
-# @app.route('/insertdata',methods=["POST"])
-# def insertdata():
-#     jam = 0
-#     data = request.form.to_dict(flat=False)
-#     now = datetime.datetime.now(datetime.timezone.utc)
-#     if ((int(now.hour)+7) > 24):
-#         jam = int(now.hour) + 7 - 24
-#     else:
-#         jam = int(now.hour) + 7
-#     tgl = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + ' ' + str(jam) + ':' + str(now.minute)
-#     doc_ref.add({"tanggal":tgl , "harga" : data['harga'][0] , "qty":data['qty'][0], "total" : data['total'][0] })
-#     return {"tanggal":tgl , "harga" : data['harga'][0] , "qty":data['qty'][0], "total" : data['total'][0] }
 
 if __name__ == "__main__":
     app.run(debug=True,)
