@@ -64,8 +64,8 @@ def getrecord():
 
     # if(post['type'][0] != ""):
 
-    
-    data = tblrecord.where(u'date',u'==',post['date'][0]).order_by(u'date', direction=firestore.Query.ASCENDING).get()
+    # .order_by(u'date', direction=firestore.Query.ASCENDING)
+    data = tblrecord.where(u'date',u'==',post['date'][0]).get()
     djson = []
     for i in range(len(data)):
         date = data[i].to_dict()['date']
