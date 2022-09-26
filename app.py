@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from flask import Flask,request
 import firebase_admin
 from firebase_admin import credentials
@@ -67,8 +68,12 @@ def getrecord():
 @app.route('/inserttypenproduct',methods=["POST"])
 def inserttypenproduct():
     data = request.form.to_dict(flat=False)
-    tbltype.add({"type":data['type'][0] })
-    tblproduct.add({"name" :data['name'][0] })
+    if(data['type'][0] != NULL and data['type'][0] != ""):
+        tbltype.add({"type":data['type'][0] })
+    
+    if(data['name'][0] != NULL and data['name'][0] != ""):
+        tblproduct.add({"name" :data['name'][0] })
+    
     return { "message" : "data has been added"}
 
 @app.route('/insertrecord',methods=["POST"])
