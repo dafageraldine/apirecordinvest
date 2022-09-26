@@ -3,7 +3,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask_cors import CORS
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -84,7 +84,7 @@ def inserttypenproduct():
 @app.route('/insertrecord',methods=["POST"])
 def insertrecord():
     data = request.form.to_dict(flat=False)
-    now = datetime.datetime.now(datetime.timezone.utc)
+    # now = datetime.datetime.now(datetime.timezone.utc)
     tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d")})
     return { "message" : "data has been added"}
 
