@@ -58,9 +58,14 @@ def getsaldo():
             djson.append({"date" : date, "saldo" : value})
     return {"data":djson}
 
-@app.route('/getrecord')
+@app.route('/getrecord',methods=["POST"])
 def getrecord():
-    data = tblrecord.get()
+    post = request.form.to_dict(flat=False)
+
+    # if(post['type'][0] != ""):
+
+    
+    data = tblrecord.where(u'date',u'==',post['date'][0]).order_by(u'date', direction=firestore.Query.ASCENDING).get()
     djson = []
     for i in range(len(data)):
         date = data[i].to_dict()['date']
