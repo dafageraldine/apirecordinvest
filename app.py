@@ -45,20 +45,21 @@ def getproduct():
 
 @app.route('/getsaldo')
 def getsaldo():
-    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(2).get()
+    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
     date = ""
     datebefore = ""
     for i in range(len(dates)):
         date = dates[i].to_dict()['date']
-        if(i == len(dates)-1):
-            datebefore = dates[i].to_dict()['date']
     data = tblrecord.where(u'date',u'==',date).get()
-    databefore = tblrecord.where(u'date',u'==',datebefore).get()
+    databefore = tblrecord.where(u'date',u'<',date).order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
+    for i in range(len(databefore)):
+        datebefore = databefore[i].to_dict()['date']
+    databefore_ = tblrecord.where(u'date',u'==',datebefore).get()
     djson = []
     value = 0
     valuebefore = 0
-    for i in range(len(databefore)):
-        valuebefore = valuebefore + databefore[i].to_dict()['value']
+    for i in range(len(databefore_)):
+        valuebefore = valuebefore + databefore_[i].to_dict()['value']
     for i in range(len(data)):
         date = data[i].to_dict()['date']
         value = value + data[i].to_dict()['value']
