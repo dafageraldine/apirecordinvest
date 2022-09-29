@@ -24,47 +24,56 @@ tbltype = dbq.collection('investment type')
 def index():
     return ("welcome to record invest webserver")
 
-@app.route('/gettype')
+@app.route('/gettype',methods=["POST"])
 def gettype():
+    post = request.form.to_dict(flat=False)
     # data = tbltype.order_by(u'type', direction=firestore.Query.DESCENDING).get().limit(1)
-    data = tbltype.order_by(u'type', direction=firestore.Query.ASCENDING).get()
+    data = tbltype.where(u'id',u'==',post["id"][0]).order_by(u'type', direction=firestore.Query.DESCENDING).get()
     djson = []
     for i in range(len(data)):
         type = data[i].to_dict()['type']
         djson.append({"type" : type})
     return {"data":djson}
 
-@app.route('/getproduct')
+@app.route('/getproduct',methods=["POST"])
 def getproduct():
-    data = tblproduct.order_by(u'name', direction=firestore.Query.ASCENDING).get()
+    post = request.form.to_dict(flat=False)
+    data = tblproduct.where(u'id',u'==',post["id"][0]).get()
     djson = []
     for i in range(len(data)):
         name = data[i].to_dict()['name']
         djson.append({"name" : name})
     return {"data":djson}
 
-@app.route('/getsaldo')
+@app.route('/getsaldo',methods=["POST"])
 def getsaldo():
-    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
+    post = request.form.to_dict(flat=False)
+    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).get()
     date = ""
     datebefore = ""
     for i in range(len(dates)):
-        date = dates[i].to_dict()['date']
+        if(post["id"][0] == dates[i].to_dict()['id'] ):
+            date = dates[i].to_dict()['date']
+            break
     data = tblrecord.where(u'date',u'==',date).get()
-    databefore = tblrecord.where(u'date',u'<',date).order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
+    databefore = tblrecord.where(u'date',u'<',date).order_by(u'date', direction=firestore.Query.DESCENDING).get()
     for i in range(len(databefore)):
-        datebefore = databefore[i].to_dict()['date']
+        if(post["id"][0] == databefore[i].to_dict()['id'] ):
+            datebefore = databefore[i].to_dict()['date']
+            break
     databefore_ = tblrecord.where(u'date',u'==',datebefore).get()
     djson = []
     value = 0
     valuebefore = 0
     for i in range(len(databefore_)):
+        
         valuebefore = valuebefore + databefore_[i].to_dict()['value']
     for i in range(len(data)):
-        date = data[i].to_dict()['date']
-        value = value + data[i].to_dict()['value']
-        if(i == len(data)-1):
-            djson.append({"date" : date, "saldo" : value, "saldobefore": valuebefore})
+        if(post["id"][0] == data[i].to_dict()['id']):
+            date = data[i].to_dict()['date']
+            value = value + data[i].to_dict()['value']
+            if(i == len(data)-1):
+                djson.append({"date" : date, "saldo" : value, "saldobefore": valuebefore})
     return {"data":djson}
 
 @app.route('/getrecord',methods=["POST"])
@@ -74,7 +83,7 @@ def getrecord():
     # if(post['type'][0] != ""):
 
     # .order_by(u'date', direction=firestore.Query.ASCENDING)
-    data = tblrecord.where(u'date',u'==',post['date'][0]).get()
+    data = tblrecord.where(u'date',u'==',post['date'][0]).where(u'id',u'==',post["id"][0]).get()
     djson = []
     for i in range(len(data)):
         date = data[i].to_dict()['date']
@@ -88,10 +97,10 @@ def getrecord():
 def inserttypenproduct():
     data = request.form.to_dict(flat=False)
     if(data['type'][0] != ""):
-        tbltype.add({"type":data['type'][0] })
+        tbltype.add({"type":data['type'][0],"id":data["id"][0] })
     
     if(data['name'][0] != ""):
-        tblproduct.add({"name" :data['name'][0] })
+        tblproduct.add({"name" :data['name'][0],"id":data["id"][0] })
     
     return { "message" : "data has been added"}
 
@@ -99,7 +108,7 @@ def inserttypenproduct():
 def insertrecord():
     data = request.form.to_dict(flat=False)
     # now = datetime.datetime.now(datetime.timezone.utc)
-    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d")})
+    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d"),"id":data["id"][0]})
     return { "message" : "data has been added"}
 
 if __name__ == "__main__":
