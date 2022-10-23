@@ -49,6 +49,7 @@ def getproduct():
 @app.route('/getsaldo',methods=["POST"])
 def getsaldo():
     post = request.form.to_dict(flat=False)
+    ## get lastest date
     dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).get()
     date = ""
     datebefore = ""
@@ -56,18 +57,22 @@ def getsaldo():
         if(post["id"][0] == dates[i].to_dict()['id'] ):
             date = dates[i].to_dict()['date']
             break
+
+    ## get data before lattest date and getting latest data based on latest date
     data = tblrecord.where(u'date',u'==',date).get()
     databefore = tblrecord.where(u'date',u'<',date).order_by(u'date', direction=firestore.Query.DESCENDING).get()
     for i in range(len(databefore)):
         if(post["id"][0] == databefore[i].to_dict()['id'] ):
             datebefore = databefore[i].to_dict()['date']
             break
+    
     databefore_ = tblrecord.where(u'date',u'==',datebefore).get()
     djson = []
     value = 0
     valuebefore = 0
     for i in range(len(databefore_)):
-        valuebefore = valuebefore + databefore_[i].to_dict()['value']
+        if(post["id"][0] == data[i].to_dict()['id']):
+            valuebefore = valuebefore + databefore_[i].to_dict()['value']
     for i in range(len(data)):
         if(post["id"][0] == data[i].to_dict()['id']):
             date = data[i].to_dict()['date']
@@ -122,7 +127,6 @@ def login():
             djson.append({"user" : data[i].to_dict()['user'],"id" :  data[i].to_dict()['id']})
             break
     return {"data":djson}
-
 
 if __name__ == "__main__":
     app.run(debug=True,)
