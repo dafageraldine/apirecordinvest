@@ -116,17 +116,12 @@ def login():
     post = request.form.to_dict(flat=False)
     data = tbluser.where(u'user',u'==',post["user"][0]).get()
     djson = []
-    success = 0
     for i in range(len(data)):
         pwd = data[i].to_dict()['password']
         if(pwd == post["pwd"][0]):
-            success = 1
             djson.append({"user" : data[i].to_dict()['user'],"id" :  data[i].to_dict()['id']})
             break
-    if(success == 1):
-        return {"data":djson}
-    else:
-        return {"data":"user atau password salah !"}
+    return {"data":djson}
 
 
 if __name__ == "__main__":
