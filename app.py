@@ -1,3 +1,4 @@
+from crypt import methods
 from operator import le
 from flask import Flask,request
 import firebase_admin
@@ -19,6 +20,7 @@ dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
 tblrecord = dbq.collection('investment record')
 tbltype = dbq.collection('investment type')
+tbluser = dbq.collection('loginuser')
 
 @app.route('/')
 def index():
@@ -27,8 +29,7 @@ def index():
 @app.route('/gettype',methods=["POST"])
 def gettype():
     post = request.form.to_dict(flat=False)
-    # data = tbltype.order_by(u'type', direction=firestore.Query.DESCENDING).get().limit(1)
-    data = tbltype.where(u'id',u'==',post["id"][0]).order_by(u'type', direction=firestore.Query.DESCENDING).get()
+    data = tbltype.where(u'id',u'==',post["id"][0]).get()
     djson = []
     for i in range(len(data)):
         type = data[i].to_dict()['type']
@@ -66,7 +67,6 @@ def getsaldo():
     value = 0
     valuebefore = 0
     for i in range(len(databefore_)):
-        
         valuebefore = valuebefore + databefore_[i].to_dict()['value']
     for i in range(len(data)):
         if(post["id"][0] == data[i].to_dict()['id']):
@@ -110,6 +110,24 @@ def insertrecord():
     # now = datetime.datetime.now(datetime.timezone.utc)
     tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d"),"id":data["id"][0]})
     return { "message" : "data has been added"}
+
+@app.route('/login',methods=["POST"])
+def login():
+    post = request.form.to_dict(flat=False)
+    data = tbluser.where(u'user',u'==',post["user"][0]).get()
+    djson = []
+    success = 0
+    for i in range(len(data)):
+        pwd = data[i].to_dict()['password']
+        if(pwd == post["pwd"][0]):
+            success = 1
+            djson.append({"user" : data[i].to_dict()['user'],"id" :  data[i].to_dict()['id']})
+            break
+    if(success == 1):
+        return {"data":djson}
+    else:
+        return {"data":"user atau password salah !"}
+
 
 if __name__ == "__main__":
     app.run(debug=True,)
