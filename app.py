@@ -14,7 +14,8 @@ CORS(app)
 ###dev
 # cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
 ####server
-cred = credentials.Certificate('recordinvest.json')
+# cred = credentials.Certificate('recordinvest.json')
+cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
