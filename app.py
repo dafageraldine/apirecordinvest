@@ -23,6 +23,22 @@ tblrecord = dbq.collection('investment record')
 tbltype = dbq.collection('investment type')
 tbluser = dbq.collection('loginuser')
 
+app = Flask(__name__)
+CORS(app)
+
+# https://apirecordinvest.herokuapp.com/
+###dev
+cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+####server
+# cred = credentials.Certificate('recordinvest.json')
+# cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
+firebase_admin.initialize_app(cred)
+dbq = firestore.client()
+tblproduct = dbq.collection('investment product')
+tblrecord = dbq.collection('investment record')
+tbltype = dbq.collection('investment type')
+tbluser = dbq.collection('loginuser')
+
 @app.route('/')
 def index():
     return ("welcome to record invest webserver")
@@ -127,6 +143,29 @@ def login():
         if(pwd == post["pwd"][0]):
             djson.append({"user" : data[i].to_dict()['user'],"id" :  data[i].to_dict()['id']})
             break
+    return {"data":djson}
+
+@app.route('/get_latest_asset',methods=["POST"])
+def get_latest_asset():
+    post = request.form.to_dict(flat=False)
+    ## get lastest date
+    dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).get()
+    date = ""
+    for i in range(len(dates)):
+        if(post["id"][0] == dates[i].to_dict()['id'] ):
+            date = dates[i].to_dict()['date']
+            break
+
+    ## get data before lattest date and getting latest data based on latest date
+    data = tblrecord.where(u'date',u'==',date).get()
+    djson = []
+    value = 0
+    for i in range(len(data)):
+        if(post["id"][0] == data[i].to_dict()['id']):
+            date = data[i].to_dict()['date']
+            value = data[i].to_dict()['value']
+            product = data[i].to_dict()['product']
+            djson.append({"date" : date, "product": product, "value" : value})
     return {"data":djson}
 
 if __name__ == "__main__":
