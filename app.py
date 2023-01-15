@@ -22,7 +22,6 @@ tblproduct = dbq.collection('investment product')
 tblrecord = dbq.collection('investment record')
 tbltype = dbq.collection('investment type')
 tbluser = dbq.collection('loginuser')
-
 app = Flask(__name__)
 CORS(app)
 
