@@ -1,4 +1,3 @@
-from crypt import methods
 from operator import le
 from flask import Flask,request
 import firebase_admin
@@ -16,21 +15,6 @@ CORS(app)
 ####server
 # cred = credentials.Certificate('recordinvest.json')
 cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
-firebase_admin.initialize_app(cred)
-dbq = firestore.client()
-tblproduct = dbq.collection('investment product')
-tblrecord = dbq.collection('investment record')
-tbltype = dbq.collection('investment type')
-tbluser = dbq.collection('loginuser')
-app = Flask(__name__)
-CORS(app)
-
-# https://apirecordinvest.herokuapp.com/
-###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
-####server
-# cred = credentials.Certificate('recordinvest.json')
-# cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
@@ -87,7 +71,7 @@ def getsaldo():
     value = 0
     valuebefore = 0
     for i in range(len(databefore_)):
-        if(post["id"][0] == data[i].to_dict()['id']):
+        if(post["id"][0] == databefore_[i].to_dict()['id']):
             valuebefore = valuebefore + databefore_[i].to_dict()['value']
     for i in range(len(data)):
         if(post["id"][0] == data[i].to_dict()['id']):
