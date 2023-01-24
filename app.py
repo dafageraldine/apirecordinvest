@@ -13,10 +13,10 @@ redis_server = Redis('/tmp/redis.db')
 
 # https://apirecordinvest.herokuapp.com/
 ###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+# cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
 ####server
 # cred = credentials.Certificate('recordinvest.json')
-# cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
+cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
