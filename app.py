@@ -4,12 +4,14 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask_cors import CORS
 from datetime import datetime
+# from redis import Redis
 from redislite import Redis
 import json
 
 app = Flask(__name__)
 CORS(app)
 redis_server = Redis('/tmp/redis.db')
+# redis_server = Redis()
 
 # https://apirecordinvest.herokuapp.com/
 ###dev
@@ -31,6 +33,22 @@ def index():
 @app.route('/pomimonitoring')
 def pomimonitoring():
     return render_template("pomimonitoring.html")
+
+@app.route('/hydroponic')
+def hydroponic():
+    return render_template("hydroponic.html")
+
+@app.route('/ansory')
+def ansory():
+    return render_template("ansory.html")
+
+@app.route('/masuyaonline')
+def masuyaonline():
+    return render_template("masuyaonline.html")
+
+@app.route('/masuyasalesapp')
+def masuyasalesapp():
+    return render_template("masuyasalesapp.html")
 
 @app.route('/gettype',methods=["POST"])
 def gettype():
