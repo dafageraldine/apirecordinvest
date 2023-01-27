@@ -39,6 +39,7 @@
 </head>
 <body>
 
+
     <header id="masthead" class="site-header" data-anchor-target=".hero" data-top="background: rgba(255,255,255,0); padding: 30px 0; box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0);" data-top-bottom="background: rgba(255,255,255,1); padding: 10px 0; box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.2);">
         <nav id="primary-navigation" class="site-navigation">
             <div class="container">
@@ -88,6 +89,7 @@
             </div>
         </div>
     </div><!-- /.hero -->
+
 
     <main id="main" class="site-main">
 
@@ -282,11 +284,49 @@
         </section><!-- /.section-counters -->
 
         <section id="contact" class="site-section section-form text-center">
+            
+    <div class="container">
+        {% with messages = get_flashed_messages(category_filter=["success"]) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+          {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(category_filter=["warn"]) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+   
             <div class="container">
 
                 <h3>Contact</h3>
                 <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
-                <form>
+                <form method="POST">
                     <div class="row">
                         <div class="col-sm-6">
                             <input type="text" name="name" class="form-control mt-x-0" placeholder="Name" required>
@@ -298,7 +338,7 @@
                             <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
                         </div>
                     </div>
-                    <button href="#" class="btn btn-border" type="submit">Hire Me <span class="glyphicon glyphicon-send"></span></button>
+                    <button class="btn btn-border" type="submit">Hire Me <span class="glyphicon glyphicon-send"></span></button>
                 </form>
             </div>
           
