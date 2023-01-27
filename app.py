@@ -4,21 +4,21 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask_cors import CORS
 from datetime import datetime
-from redis import Redis
-# from redislite import Redis
+# from redis import Redis
+from redislite import Redis
 import json
 
 app = Flask(__name__)
 CORS(app)
-# redis_server = Redis('/tmp/redis.db')
-redis_server = Redis()
+redis_server = Redis('/tmp/redis.db')
+# redis_server = Redis()
 
 # https://apirecordinvest.herokuapp.com/
 ###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+# cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
 ####server
 # cred = credentials.Certificate('recordinvest.json')
-# cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
+cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')

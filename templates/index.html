@@ -7,7 +7,6 @@
     ================================================== -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <title>DafaGeraldinePortofolio</title>
 
     <meta name="description" content="">
@@ -21,6 +20,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 
     <!-- Favicon
     ================================================== -->
@@ -35,13 +35,6 @@
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='assets/css/style.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='assets/css/responsive.css')}}" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
 
 </head>
 <body>
@@ -78,22 +71,18 @@
             </div>
         </nav><!-- /.primary-navigation -->
     </header><!-- /#header -->
+
     <div id="hero" class="hero">
         <div class="container">
             <div class="row">
 
-                <div class="col-md-6">
-                    <h1>Dafa Geraldine</h1>
-                    <div class="page-scroll">
-                        <p class="job-title">Software Engineer</p>
-                        <a href="#contact" class="btn btn-fill ">Hire me</a>
-                        <div class="clearfix visible-xxs"></div>
-                        <a href="#portfolio" class="btn btn-border">Explore more</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 text-right">
-                    <img src="{{url_for('static', filename='assets/img/alex-vidal.png')}}" alt="alex-vidal">
+                <div class="text-center" style="padding-top: 20%;">
+                    <img src="{{url_for('static', filename='assets/img/me.jpg')}}" alt="dafa" style="border-radius: 50%; width: 200px; height: 200px;">
+                    <h1 style="padding-top: 10px;">Dafa Geraldine</h1>
+                    <p class="job-title">Software Engineer</p>
+                    <a href="#contact" class="btn btn-fill">Hire me</a>
+                    <div class="clearfix visible-xxs"></div>
+                    <a href="#portfolio" class="btn btn-border">Explore more</a>
                 </div>
 
             </div>
@@ -312,44 +301,10 @@
                     <button href="#" class="btn btn-border" type="submit">Hire Me <span class="glyphicon glyphicon-send"></span></button>
                 </form>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4 col-xs-12">
-                        <a class="icon facebook-bg" href="#"><i class="icon-facebook"></i></a>
-                        <a class="icon twitter-bg" href="#"><i class="icon-twitter"></i></a>
-                        <a class="icon gplus-bg" href="#"><i class="icon-linkedin"></i></a>
-                        <a class="icon linkedin-bg" href="#"><i class="icon-gplus"></i></a>
-                    </div>
-                    <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3"><p class="copyright">2023. All Rights Reserved</p></div>
-                    <div class="col-sm-4 col-xs-3">
-                    </div>
-                </div>
-            </div>
+          
         </section><!-- /.section-form -->
 
-        
-        
-
     </main><!-- /#main -->
-    
-    <footer id="colophon" class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-xs-12">
-                    <a class="icon facebook-bg" href="#"><i class="icon-facebook"></i></a>
-                    <a class="icon twitter-bg" href="#"><i class="icon-twitter"></i></a>
-                    <a class="icon gplus-bg" href="#"><i class="icon-linkedin"></i></a>
-                    <a class="icon linkedin-bg" href="#"><i class="icon-gplus"></i></a>
-                </div>
-                <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3"><p class="copyright">2023. All Rights Reserved</p></div>
-                <div class="col-sm-4 col-xs-3">
-                    <div class="text-right page-scroll">
-                        <!-- <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer><!-- /#footer -->
 
     <!-- Modals -->
     <div id="portfolioItem1" class="modal fade" role="dialog">
@@ -459,6 +414,21 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    
+   
+    <footer style="background-color: black; height: 15%;">
+        <div class="container" style="padding-top: 20px;">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="https://www.instagram.com/dafageraldine_/" class="icon insta-bg"><i class="fa-brands fa-instagram" style="font-size: 21px;"></i></a>
+                    <a class="icon gplus-bg" href="https://www.linkedin.com/in/dafa-geraldine-47b400195"><i class="icon-linkedin"></i></a>
+                    <a href="https://wa.me/6287826116644?text=Halo dafa bisa berbicara denganmu ?" class="icon whatsapp-bg"><i class="fa-brands fa-whatsapp" style="font-size: 21px;""></i></a>
+                    <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a>
+                  </div>
+                <div class="col-md-12 text-center" style="padding-top: 10px;"><h5 class="copyright">Created By Dafa Geraldine 2023.</h5></div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
