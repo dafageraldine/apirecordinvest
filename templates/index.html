@@ -31,6 +31,7 @@
     ================================================== -->
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static', filename='assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='assets/css/style.css')}}" rel="stylesheet">
@@ -88,12 +89,12 @@
             <div class="row">
 
                 <div class="text-center" style="padding-top: 20%;">
-                    <img src="{{url_for('static', filename='assets/img/me.jpg')}}" alt="dafa" style="border-radius: 50%; width: 200px; height: 200px;">
-                    <h1 style="padding-top: 10px;">Dafa Geraldine</h1>
-                    <p class="job-title">Software Engineer</p>
-                    <a href="#contact" class="btn btn-fill">Hire me</a>
+                    <img data-aos="flip-right"  data-aos-duration="2000" src="{{url_for('static', filename='assets/img/me.jpg')}}" alt="dafa" style="border-radius: 50%; width: 200px; height: 200px;">
+                    <h1 style="padding-top: 10px;" data-aos="fade-right" data-aos-duration="1000">Dafa Geraldine</h1>
+                    <p class="job-title pekerjaan"></p>
+                    <a href="#contact" class="btn btn-fill" data-aos="fade-right" data-aos-duration="1000">Hire me</a>
                     <div class="clearfix visible-xxs"></div>
-                    <a href="#portfolio" class="btn btn-border">Explore more</a>
+                    <a href="#portfolio" class="btn btn-border" data-aos="fade-left" data-aos-duration="1000">Explore more</a>
                 </div>
 
             </div>
@@ -107,12 +108,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h2>About</h2>
-                        <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
-                        <p>Hello! I'm Dafa Geraldine, a Software Engineer and I'm Computer Engineering bachelor, I was graduated at 2021.
+                        <h2 data-aos="fade-right" data-aos-duration="1000">About</h2>
+                        <img data-aos="fade-right" data-aos-duration="1000" src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
+                        <p data-aos="fade-right" data-aos-duration="1000">Hello! I'm Dafa Geraldine, a Software Engineer and I'm Computer Engineering bachelor, I was graduated at 2021.
                             I have some work experience that you can see it in my recent works section. I have interest in software development.
                             especially mobile apps, and also have interest in IoT (Internet of Things).</p>
-                        <a href="https://drive.google.com/file/d/1AptgPPNd0Rsoo8nFxCPfExgKwcYPO-M7/view?usp=share_link" class="btn btn-fill" target="_blank" download>Download my cv</a>
+                        <a href="https://drive.google.com/file/d/1AptgPPNd0Rsoo8nFxCPfExgKwcYPO-M7/view?usp=share_link" data-aos="zoom-in-up" data-aos-duration="1000" class="btn btn-fill" target="_blank" download>Download my cv</a>
                     </div>
                 </div>
             </div>
@@ -121,7 +122,7 @@
         <section class="site-section section-skills">
             <div class="container">
                 <div class="text-center">
-                    <h3>My Skills</h3>
+                    <h3 data-aos="fade-right" data-aos-duration="1000">My Skills</h3>
                     <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
                 </div>
                 <div class="row">
@@ -175,24 +176,24 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>What i do</h3>
+                        <h3 data-aos="fade-right" data-aos-duration="1000">What i do</h3>
                         <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" data-aos="fade-right" data-aos-duration="1000">
                         <div class="service">
                             <img src="{{url_for('static', filename='assets/img/front-end.svg')}}" alt="Front End Developer">
                             <h4>Mobile apps</h4>
                             <p>For Mobile apps project, usually i'm using flutter , kotlin and java. I have experience in developing mobile apps using both of them. project that i've done like creating mobile apps for reporting, e-commerce,monitoring and much more</p>
                         </div><!-- /.service -->
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" data-aos="fade-up" data-aos-duration="1000">
                         <div class="service">
                             <img src="{{url_for('static', filename='assets/img/back-end.svg')}}" alt="Back End Developer">
                             <h4>Desktop apps</h4>
                             <p>for desktop apps project, usually i'm using java Netbeans. and I have experience in developing desktop apps for invoice control, reporting, tax management and much more/</p>
                         </div><!-- /.service -->
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" data-aos="fade-left" data-aos-duration="1000">
                         <div class="service">
                             <img src="{{url_for('static', filename='assets/img/consultancy.svg')}}" alt="Coding">
                             <h4>Back end</h4>
@@ -206,11 +207,11 @@
         <section id="portfolio" class="site-section section-portfolio">
             <div class="container">
                 <div class="text-center">
-                    <h3>My recent Works</h3>
+                    <h3 data-aos="fade-right" data-aos-duration="1000">My recent Works</h3>
                     <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6"  data-aos="fade-up"  data-aos-anchor-placement="top-bottom"  data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/pomilogo.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -220,7 +221,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6" data-aos="fade-up"  data-aos-anchor-placement="top-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/splhydro.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -230,7 +231,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6" data-aos="fade-up"  data-aos-anchor-placement="top-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/ansorysplash.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -240,7 +241,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6" data-aos="fade-up"  data-aos-anchor-placement="center-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/splash.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -250,7 +251,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6" data-aos="fade-up"  data-aos-anchor-placement= "center-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/desktop.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -260,7 +261,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-md-4 col-xs-6" data-aos="fade-up"  data-aos-anchor-placement="center-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/MasuyaSO.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -270,7 +271,7 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
-                    <div class="col-md-4 col-xs-6" style="padding-top: 10px;">
+                    <div class="col-md-4 col-xs-6" style="padding-top: 10px;" data-aos="fade-up"  data-aos-anchor-placement="top-bottom" data-aos-duration="500">
                         <div class="portfolio-item">
                             <img src="{{url_for('static', filename='assets/img/thumbnail.jpg')}}" class="img-res" alt="">
                             <div class="portfolio-item-info">
@@ -344,7 +345,7 @@
    
             <div class="container">
 
-                <h3>Contact</h3>
+                <h3 data-aos="fade-right" data-aos-duration="1000">Contact</h3>
                 <img src="{{url_for('static', filename='assets/img/lines.svg')}}" class="img-lines" alt="lines">
                 <form method="POST">
                     <div class="row">
@@ -358,7 +359,7 @@
                             <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
                         </div>
                     </div>
-                    <button class="btn btn-border" type="submit">Hire Me <span class="glyphicon glyphicon-send"></span></button>
+                    <button class="btn btn-border" type="submit" data-aos="zoom-out-up" data-aos-duration="1000">Hire Me <span class="glyphicon glyphicon-send"></span></button>
                 </form>
             </div>
           
@@ -500,8 +501,7 @@
                 <div class="col-md-12 text-center">
                     <a href="https://www.instagram.com/dafageraldine_/" class="icon insta-bg"><i class="fa-brands fa-instagram" style="font-size: 21px;"></i></a>
                     <a class="icon gplus-bg" href="https://www.linkedin.com/in/dafa-geraldine-47b400195"><i class="icon-linkedin"></i></a>
-                    <a href="https://wa.me/6287826116644?text=Halo dafa bisa berbicara denganmu ?" class="icon whatsapp-bg"><i class="fa-brands fa-whatsapp" style="font-size: 21px;""></i></a>
-                    <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a>
+                    <a href="https://wa.me/6287826116644?text=Halo dafa bisa berbicara denganmu ?" class="icon whatsapp-bg"><i class="fa-brands fa-whatsapp" style="font-size: 21px;"></i></a>
                   </div>
                 <div class="col-md-12 text-center" style="padding-top: 10px;"><h5 class="copyright">Created By Dafa Geraldine 2023.</h5></div>
             </div>
@@ -518,6 +518,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js"></script>
     <script src="{{url_for('static', filename='assets/js/jquery.countTo.min.js')}}"></script>
     <script src="{{url_for('static', filename='assets/js/script.js')}}"></script>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
+    <script>
+        gsap.registerPlugin(TextPlugin);
+        gsap.to('.pekerjaan', {duration: 2, delay: 0.5, text:"Software Engineer"});
+    </script>
 </body>
 </html>
