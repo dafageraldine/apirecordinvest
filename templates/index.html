@@ -37,6 +37,16 @@
     <link href="{{url_for('static', filename='assets/css/responsive.css')}}" rel="stylesheet">
 
 </head>
+<style>
+    footer {
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding-top: 20x;
+        bottom: 0;
+        width: 100%;
+      }
+</style>
 <body>
 
 
@@ -260,6 +270,16 @@
                             </div><!-- /.portfolio-item-info -->
                         </div><!-- /.portfolio-item -->
                     </div>
+                    <div class="col-md-4 col-xs-6" style="padding-top: 10px;">
+                        <div class="portfolio-item">
+                            <img src="{{url_for('static', filename='assets/img/thumbnail.jpg')}}" class="img-res" alt="">
+                            <div class="portfolio-item-info">
+                                <h4>Dynamic And Static Object Detection</h4>
+                                <a href="#" data-toggle="modal" data-target="#portfolioItem7"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                <a href="{{url_for('dynamicandstaticobjectdetection')}}"><span class="glyphicon glyphicon-link"></span></a>
+                            </div><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
                 </div>
             </div>
         </section><!-- /.secton-portfolio -->
@@ -272,7 +292,7 @@
                         <h4>Years Experience</h4>
                     </div>
                     <div class="col-sm-4 col-xs-12">
-                        <p class="counter start" data-to="6" data-speed="2000">0</p>
+                        <p class="counter start" data-to="7" data-speed="2000">0</p>
                         <h4>Projects Delivered</h4>
                     </div>
                     <div class="col-sm-4 col-xs-12">
@@ -454,9 +474,27 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div id="portfolioItem7" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
+              <img class="img-res" src="{{url_for('static', filename='assets/img/thumbnail.jpg')}}" alt="">
+            </div>
+            <div class="modal-body">
+              <h4 class="modal-title">Dynamic And Static Object Detection</h4>
+              <p>This is my final project on POLITEKNIK ELEKTRONIKA NEGERI SURABAYA (Electronic Engineering Polytechnic Institute of Surabaya) to get my computer engineering bachelor degree. in this porject i created dynamic and static object detection on robot, using LiDAR and Classify the data with Support Vector Machine(SVM)</p>
+            </div>
+            <div class="modal-footer">
+              <a href="{{url_for('dynamicandstaticobjectdetection')}}" class="btn btn-fill">Visit Page</a>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
     
    
-    <footer style="background-color: black; height: 15%;">
+    <footer>
         <div class="container" style="padding-top: 20px;">
             <div class="row">
                 <div class="col-md-12 text-center">
