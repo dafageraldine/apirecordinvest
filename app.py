@@ -16,7 +16,7 @@ redis_server = Redis()
 
 # https://apirecordinvest.herokuapp.com/
 ###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+cred = credentials.Certificate('E:/Dafa Data/All API/apirecordinvest/recordinvest.json')
 ####server
 # cred = credentials.Certificate('recordinvest.json')
 # cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
@@ -98,6 +98,10 @@ def masuyasalesapp():
 @app.route('/dynamicandstaticobjectdetection')
 def dynamicandstaticobjectdetection():
     return render_template("dynamicandstatic.html")
+
+@app.route('/masuyadesktop')
+def masuyadesktop():
+    return render_template("masuyadesktop.html")
 
 @app.route('/gettype',methods=["POST"])
 def gettype():
