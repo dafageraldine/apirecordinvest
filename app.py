@@ -1,25 +1,26 @@
-from flask import Flask,render_template,request,flash,redirect,url_for
+from flask import Flask,render_template,request,flash,redirect,url_for,Response
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask_cors import CORS
-from datetime import datetime
-from redis import Redis
-# from redislite import Redis
+from datetime import datetime, timedelta
+# from redis import Redis
+from redislite import Redis
+import pandas as pd
 import json, smtplib
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 CORS(app)
-# redis_server = Redis('/tmp/redis.db')
-redis_server = Redis()
+redis_server = Redis('/tmp/redis.db')
+# redis_server = Redis()
 
 # https://apirecordinvest.herokuapp.com/
 ###dev
-cred = credentials.Certificate('E:/Programming/apirecordinvest/recordinvest.json')
+# cred = credentials.Certificate('D:/Programming/apirecordinvest/recordinvest.json')
 ####server
 # cred = credentials.Certificate('recordinvest.json')
-# cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
+cred = credentials.Certificate('/home/dafageraldine/mysite/recordinvest.json')
 firebase_admin.initialize_app(cred)
 dbq = firestore.client()
 tblproduct = dbq.collection('investment product')
@@ -99,6 +100,10 @@ def masuyasalesapp():
 def dynamicandstaticobjectdetection():
     return render_template("dynamicandstatic.html")
 
+@app.route('/masuyadesktop')
+def masuyadesktop():
+    return render_template("masuyadesktop.html")
+
 @app.route('/gettype',methods=["POST"])
 def gettype():
     post = request.form.to_dict(flat=False)
@@ -139,41 +144,47 @@ def getproduct():
 def getsaldo():
     post = request.form.to_dict(flat=False)
     ids = post["id"][0]
+    # ids = "1aby"
     key_data = "saldo" + ids
     fromredis = redis_server.get(key_data)
     if(fromredis):
         return json.loads(fromredis)
     else:
         ## get lastest date
-        dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).get()
+        dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
         date = ""
         datebefore = ""
         for i in range(len(dates)):
-            if(post["id"][0] == dates[i].to_dict()['id'] ):
+            if(ids == dates[i].to_dict()['id'] ):
                 date = dates[i].to_dict()['date']
                 break
 
+        latestdate = datetime(date.year,date.month,date.day)
         ## get data before lattest date and getting latest data based on latest date
-        data = tblrecord.where(u'date',u'==',date).get()
-        databefore = tblrecord.where(u'date',u'<',date).order_by(u'date', direction=firestore.Query.DESCENDING).get()
+        data = tblrecord.where(u'date',u'>=',latestdate).get()
+        databefore = tblrecord.where(u'date',u'<',latestdate).order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
         for i in range(len(databefore)):
-            if(post["id"][0] == databefore[i].to_dict()['id'] ):
+            if(ids == databefore[i].to_dict()['id'] ):
                 datebefore = databefore[i].to_dict()['date']
                 break
 
-        databefore_ = tblrecord.where(u'date',u'==',datebefore).get()
+        before_date = datetime(datebefore.year,datebefore.month,datebefore.day)
+        databefore_ = tblrecord.where(u'date',u'>=',before_date).where(u'date',u'<',latestdate).get()
         djson = []
         value = 0
         valuebefore = 0
         for i in range(len(databefore_)):
-            if(post["id"][0] == databefore_[i].to_dict()['id']):
+            if(ids == databefore_[i].to_dict()['id']):
                 valuebefore = valuebefore + databefore_[i].to_dict()['value']
         for i in range(len(data)):
-            if(post["id"][0] == data[i].to_dict()['id']):
+            if(ids == data[i].to_dict()['id']):
                 date = data[i].to_dict()['date']
                 value = value + data[i].to_dict()['value']
+                bulan = str(date.month)
+                if(date.month < 10):
+                    bulan =  "0"+str(bulan)
                 if(i == len(data)-1):
-                    djson.append({"date" : date, "saldo" : value, "saldobefore": valuebefore})
+                    djson.append({"date" : str(date.year) + "-" + bulan + "-" + str(date.day), "saldo" : value, "saldobefore": valuebefore})
         redis_server.set(key_data,json.dumps({"data":djson}))
         redis_server.expire(key_data,7200)
         return {"data":djson}
@@ -181,18 +192,30 @@ def getsaldo():
 @app.route('/getrecord',methods=["POST"])
 def getrecord():
     post = request.form.to_dict(flat=False)
+    ids = post["id"][0]
+    # ids = "1aby"
+    date_obj = datetime.strptime(post["date"][0], "%Y-%m-%d")
 
-    # if(post['type'][0] != ""):
+    # Extract the year, month, and day components
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
 
-    # .order_by(u'date', direction=firestore.Query.ASCENDING)
-    data = tblrecord.where(u'date',u'==',post['date'][0]).where(u'id',u'==',post["id"][0]).get()
+    # Create a new datetime object with the extracted components
+    new_date_obj = datetime(year, month, day)
+    next_day = date_obj + timedelta(days=1)
+    data = tblrecord.where(u'date',u'>=',new_date_obj).where(u'date','<',next_day).get()
     djson = []
     for i in range(len(data)):
-        date = data[i].to_dict()['date']
-        value = data[i].to_dict()['value']
-        type = data[i].to_dict()['type']
-        product = data[i].to_dict()['product']
-        djson.append({"date" : date, "value" : value, "type" : type, "product" : product})
+        if(data[i].to_dict()['id'] == ids):
+            date = data[i].to_dict()['date']
+            value = data[i].to_dict()['value']
+            type = data[i].to_dict()['type']
+            product = data[i].to_dict()['product']
+            bulan = str(date.month)
+            if(date.month < 10):
+                bulan =  "0"+str(bulan)
+            djson.append({"date" : str(date.year) + "-" + bulan + "-" + str(date.day), "value" : value, "type" : type, "product" : product})
     return {"data":djson}
 
 @app.route('/inserttypenproduct',methods=["POST"])
@@ -221,7 +244,7 @@ def insertrecord():
     redis_server.delete(key_data)
     redis_server.delete(key_asset)
     # now = datetime.datetime.now(datetime.timezone.utc)
-    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":datetime.utcnow().strftime("%Y-%m-%d"),"id":data["id"][0]})
+    tblrecord.add({"type":data['type'][0],"product":data['product'][0], "value":float(data['value'][0]),"date":firestore.SERVER_TIMESTAMP,"id":data["id"][0]})
     return { "message" : "data has been added"}
 
 @app.route('/login',methods=["POST"])
@@ -246,15 +269,16 @@ def get_latest_asset():
         return json.loads(fromredis)
     else:
         ## get lastest date
-        dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).get()
-        date = ""
+        dates = tblrecord.order_by(u'date', direction=firestore.Query.DESCENDING).limit(1).get()
+        datez = ""
         for i in range(len(dates)):
             if(post["id"][0] == dates[i].to_dict()['id'] ):
-                date = dates[i].to_dict()['date']
+                datez = dates[i].to_dict()['date']
                 break
 
         ## get data before lattest date and getting latest data based on latest date
-        data = tblrecord.where(u'date',u'==',date).get()
+        latestdate = datetime(datez.year,datez.month,datez.day)
+        data = tblrecord.where(u'date',u'>=',latestdate).get()
         djson = []
         value = 0
         for i in range(len(data)):
@@ -262,10 +286,85 @@ def get_latest_asset():
                 date = data[i].to_dict()['date']
                 value = data[i].to_dict()['value']
                 product = data[i].to_dict()['product']
-                djson.append({"date" : date, "product": product, "value" : value})
+                bulan = str(date.month)
+                if(date.month < 10):
+                    bulan =  "0"+str(bulan)
+                djson.append({"date" : str(date.year) + "-" + bulan + "-" + str(date.day), "product": product, "value" : value})
         redis_server.set(key_data,json.dumps({"data":djson}))
         redis_server.expire(key_data,7200)
         return {"data":djson}
 
+@app.route('/download_excel')
+def download_excel():
+    # create a pandas DataFrame
+    data = {'Name': ['John', 'Mary', 'Bob'],
+            'Age': [25, 30, 35],
+            'Country': ['USA', 'Canada', 'UK']}
+    df = pd.DataFrame(data)
+
+    # create an Excel file from the DataFrame
+    excel_file = pd.ExcelWriter('data.xlsx', engine='xlsxwriter')
+    df.to_excel(excel_file, index=False)
+    excel_file.save()
+
+    # read the Excel file and return as a response
+    with open('data.xlsx', 'rb') as excel:
+        data = excel.read()
+
+    return Response(data,headers={'Content-Disposition': 'attachment; filename=data.xlsx'},content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+@app.route('/get_record_by_range',methods=["POST"])
+def get_record_by_range():
+    post = request.form.to_dict(flat=False)
+    djson = []
+    ids = post["id"][0]
+    # ids = "1aby"
+    date_obj = datetime.strptime(post["datestart"][0], "%Y-%m-%d")
+    date_obj_finish = datetime.strptime(post["datefinish"][0], "%Y-%m-%d")
+    # date_obj = datetime.strptime("2023-01-01", "%Y-%m-%d")
+    # date_obj_finish = datetime.strptime("2023-03-24", "%Y-%m-%d")
+
+    # Extract the year, month, and day components
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    year_finish = date_obj_finish.year
+    month_finish = date_obj_finish.month
+    day_finish = date_obj_finish.day
+
+    # Create a new datetime object with the extracted components
+    datestart = datetime(year, month, day)
+    datefinish = datetime(year_finish, month_finish, day_finish)
+    data = tblrecord.where(u'date', u'>=', datestart).where(u'date',u'<=',datefinish).order_by(u'date', direction=firestore.Query.DESCENDING).get()
+
+    listday = []
+    listmoney = []
+    for i in range(len(data)):
+        value = data[i].to_dict()['value']
+        date = data[i].to_dict()['date']
+        bulan = str(date.month)
+        if(date.month < 10):
+            bulan =  "0"+str(bulan)
+        if(len(listday) == 0):
+            if(ids == data[i].to_dict()['id']):
+                listday.append(str(date.year) + "-" + bulan + "-" + str(date.day))
+                listmoney.append(value)
+        else:
+            flag = 0
+            for j in range(len(listday)):
+                if(ids == data[i].to_dict()['id']):
+                    if(listday[j] == str(date.year) + "-" + bulan + "-" + str(date.day)):
+                        flag = 1
+                        listmoney[j] = listmoney[j] + value
+            if(flag == 0):
+                if(ids == data[i].to_dict()['id']):
+                    listday.append(str(date.year) + "-" + bulan + "-" + str(date.day))
+                    listmoney.append(value)
+
+    for i in range(len(listday)):
+        djson.append({"date":listday[i], "money":listmoney[i]})
+
+    return {"data":djson}
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
