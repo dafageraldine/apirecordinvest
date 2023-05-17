@@ -1,4 +1,4 @@
-from webportfolio import app, current_app,pd,request,redis_server,json,tbltype,tblproduct,tblrecord,firestore,datetime,timedelta,tbluser,Response
+from webportfolio import app,pd,request,redis_server,json,tbltype,tblproduct,tblrecord,firestore,datetime,timedelta,tbluser,Response
 import apistockanalysis
 
 @app.route('/gettype',methods=["POST"])
@@ -287,23 +287,6 @@ def get_record_by_range():
         redis_server.set(key_data,json.dumps({"data":djson}))
         redis_server.expire(key_data,7200)
         return {"data":djson}
-
-@app.route('/get_list_emiten')
-def get_list_emiten():
-    json_arr = []
-    key_data = "shmindo"
-    fromredis = redis_server.get(key_data)
-    if(fromredis):
-        return json.loads(fromredis)
-    else:
-        csv_path = current_app.open_resource('static/assets/csv/List Emiten/all.csv')
-        df = pd.read_csv(csv_path)
-
-        for i in range(len(df)):
-            json_arr.append({"code" : df["code"][i], "name" : df["name"][i]})
-        redis_server.set(key_data,json.dumps({"data":json_arr}))
-        redis_server.expire(key_data,14400)
-        return {"data":json_arr}
 
 if __name__ == "__main__":
     app.run()
