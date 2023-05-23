@@ -2,22 +2,34 @@ from webportfolio import app,pd,current_app,json,redis_server,request
 import math
 import locale
 
-@app.route('/get_list_emiten')
+@app.route('/get_list_emiten', methods=['GET'])
 def get_list_emiten():
-    json_arr = []
-    key_data = "shmindo"
-    fromredis = redis_server.get(key_data)
-    if(fromredis):
-        return json.loads(fromredis)
-    else:
-        csv_path = current_app.open_resource('static/assets/csv/List Emiten/all.csv')
-        df = pd.read_csv(csv_path)
+   jenis_saham = request.args.get('jenis')
+   json_arr = []
+   key_data = jenis_saham
+   fromredis = redis_server.get(key_data)
+   if(fromredis):
+      return json.loads(fromredis)
+   else:
+      if(jenis_saham == "us"):
+         csv_path = current_app.open_resource('static/assets/csv/List Emiten/all.csv')
+         df = pd.read_csv(csv_path)
 
-        for i in range(len(df)):
+         for i in range(len(df)):
             json_arr.append({"code" : df["code"][i], "name" : df["name"][i]})
-        redis_server.set(key_data,json.dumps({"data":json_arr}))
-        redis_server.expire(key_data,14400)
-        return {"data":json_arr}
+         redis_server.set(key_data,json.dumps({"data":json_arr}))
+         redis_server.expire(key_data,14400)
+         return {"data":json_arr}
+      else:
+         csv_path = current_app.open_resource('static/assets/csv/List Emiten/stocklistus.csv')
+         df = pd.read_csv(csv_path)
+
+         for i in range(len(df)):
+            json_arr.append({"code" : df["stock"][i], "name" : df["name"][i]})
+         redis_server.set(key_data,json.dumps({"data":json_arr}))
+         redis_server.expire(key_data,14400)
+         return {"data":json_arr}
+      
 
 @app.route('/analyze', methods=['GET'])
 def analyze():
